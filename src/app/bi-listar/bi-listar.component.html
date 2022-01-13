@@ -1,0 +1,45 @@
+<div class="card">
+    <h3>Lista de Bilhetes de Identidade</h3>
+    <div class="field grid" style="width: 100%;">
+        <div style="width: 100%; text-align: left;">
+            <p-button (onClick)="novoBilheteIdentidade()" class="align-items-center" icon="pi pi-plus" label="Novo Bilhete de Identidade">
+            </p-button>
+        </div>
+    </div>
+
+    <p-table [value]="pessoas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nome</th>
+                <th>Nº de Bilhete</th>
+                <th>Filiação</th>
+                <th>Data de Nascimento</th>
+                <th>Sexo</th>
+                <th>Residência</th>
+                <th>Período de Validade</th>
+                <th>Opções</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pessoa>
+            <tr>
+                <td>{{pessoa.nome}}</td>
+                <td>{{pessoa.numeroIdentificacao}}</td>
+                <td>{{pessoa.pai}} e {{pessoa.mae}}</td>
+                <td>{{formatarDate(pessoa.dataNascimento)}}</td>
+                <td>{{pessoa.fkSexo.nome}}</td>
+                <td>{{pessoa.fkResidencia.nome}}</td>
+                <td>({{formatarDate(pessoa.dataEmissao)}}) até ({{formatarDate(pessoa.prazoValidade)}})</td>
+                <td>
+                    <p-button (onClick)="editarBilhete( pessoa.pkPessoa )" type="button" icon="pi pi-pencil" styleClass="p-button-text"></p-button>
+                    <p-button (onClick)="apagarBilhete( pessoa.pkPessoa )" type="button" icon="pi pi-trash" styleClass="p-button-text"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>

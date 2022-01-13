@@ -1,0 +1,131 @@
+<div class="card">
+    <h3>Novo Bilhete de Identidade</h3>
+    <div class="field grid" style="width: 100%;">
+        <div style="width: 100%; text-align: left;">
+            <p-button (onClick)="listarBilhetes()" class="align-items-center" icon="pi pi-plus" label="Listar Bilhetes">
+            </p-button>
+        </div>
+    </div>
+</div>
+<form [formGroup]="formNovaPessoa" (ngSubmit)="salvar()">
+    <div class="card">
+        <h3>Dados Pessoais</h3>
+        <div class="field grid">
+            <label for="firstname3" class="col-fixed" style="width:250px">Nome Completo</label>
+            <div class="col">
+                <input name="nomeCompleto" formControlName="nomeCompleto" type="text" pInputText style="width: 100%" />
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="firstname2" class="col-fixed" style="width:250px">Nº Documento de Identificação</label>
+            <div class="col">
+                <input name="nDocumentoIdentidade" formControlName="nDocumentoIdentidade" type="text" pInputText style="width: 500px" />
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="firstname2" class="col-fixed" style="width:250px">Sexo</label>
+            <div class="col">
+                <select name="sexo" formControlName="sexo" class="p-inputtext p-component" style="width: 100%;">
+                    <option value="{{null}}" disabled>Selecionar o Sexo</option>
+                    <option *ngFor="let sexo of listaSexo" value="{{sexo.pkSexo}}">{{sexo.nome}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="firstname2" class="col-fixed" style="width:250px">Data de Nascimento</label>
+            <div class="col">
+                <p-calendar name="dataNascimento" formControlName="dataNascimento" dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="firstname3" class="col-fixed" style="width:250px">Nome do Pai</label>
+            <div class="col">
+                <input name="nomePai" formControlName="nomePai" type="text" pInputText style="width: 100%;" />
+            </div>
+        </div>
+
+        <div class="field grid">
+            <label for="firstname3" class="col-fixed" style="width:250px">Nome do Mãe</label>
+            <div class="col">
+                <input name="nomeMae" formControlName="nomeMae" type="text" pInputText style="width: 100%;" />
+            </div>
+        </div>
+        <h3>Dados de Validade</h3>
+        <div class="field grid">
+            <div class="col">
+                <label>&nbsp;</label>
+                <div class="p-field-checkbox">
+                    <p-checkbox name="eNacional" formControlName="eNacional" [binary]="true"></p-checkbox>
+                    <label>&nbsp;&nbsp;Bilhete Nacional</label>
+                </div>
+            </div>
+            <div class="col">
+                <label>&nbsp;</label>
+                <div class="p-field-checkbox">
+                    <p-checkbox name="eVitalicio" formControlName="eVitalicio" [binary]="true"></p-checkbox>
+                    <label>&nbsp;&nbsp;Bilhete Vitalício</label>
+                </div>
+            </div>
+        </div>
+        <div class="field grid">
+            <div class="col">
+                <label>&nbsp;</label>
+                <div class="field col">
+                    <label for="lastname2">Data de Emissão</label><br/>
+                    <p-calendar name="dataEmissao" formControlName="dataEmissao" dateFormat="mm-dd-yy" [showIcon]="true" inputId="icon"></p-calendar>
+                </div>
+            </div>
+            <div class="col">
+                <label>&nbsp;</label>
+                <div class="field col">
+                    <label for="lastname2">Válido Até</label><br/>
+                    <p-calendar name="dataValidade" formControlName="dataValidade" [disabled]="eVitalicio" dateFormat="mm-dd-yy" [showIcon]="true" inputId="icon"></p-calendar>
+                </div>
+            </div>
+        </div>
+
+        <h3>Dados de Residência</h3>
+
+        <div class="field grid">
+            <div class="col">
+                <label>&nbsp;</label>
+                <div class="field col">
+                    <label for="lastname2">Cidade</label><br/>
+                    <select name="cidade" formControlName="cidade" (ngModelChange)="mudarCidade($event)" class="p-inputtext p-component" style="width: 100%;">
+                        <option value="{{null}}" disabled>Selecionar a Cidade</option>
+                        <option *ngFor="let localidade of listaLocalidadeCidade" value="{{localidade.pkLocalidade}}">{{localidade.nome}}</option>
+                    </select>
+                    <label for="lastname2">{{cidadeMensagem}}</label><br/>
+                </div>
+            </div>
+            <div class="col">
+                <label>&nbsp;</label>
+                <div class="field col">
+                    <label for="lastname2">Municipio</label><br/>
+                    <select name="municipio" formControlName="municipio" (ngModelChange)="mudarMunicipio($event)" class="p-inputtext p-component" style="width: 100%;">
+                        <option value="{{null}}" disabled>Selecionar o Municipio</option>
+                        <option *ngFor="let localidade of listaLocalidadeMunicipio" value="{{localidade.pkLocalidade}}">{{localidade.nome}}</option>
+                    </select>
+                    <label for="lastname2">{{municipioMensagem}}</label><br/>
+                </div>
+            </div>
+            <div class="col">
+                <label>&nbsp;</label>
+                <div class="field col">
+                    <label for="lastname2">Bairro</label><br/>
+                    <select name="bairro" formControlName="bairro" class="p-inputtext p-component" style="width: 100%;">
+                        <option value="{{null}}" disabled>Selecionar o Bairro</option>
+                        <option *ngFor="let localidade of listaLocalidadeBairro" value="{{localidade.pkLocalidade}}">{{localidade.nome}}</option>
+                    </select>
+                    <label for="lastname2">{{bairroMensagem}}</label><br/>
+                </div>
+            </div>
+        </div>
+        <div class="field grid" style="width: 100%;">
+            <div style="width: 100%; text-align: center;">
+                <p-button type="submit" class="align-items-center" label="Salvar Bilhete de Identidade">
+                </p-button>
+            </div>
+        </div>
+    </div>
+</form>
